@@ -1,0 +1,48 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: app
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/shopapp?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&serverTimezone=UTC&createDatabaseIfNotExist=true}
+    username: ${MYSQL_ROOT_USERNAME:root}
+    password: ${MYSQL_ROOT_PASSWORD:root}
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+  data:
+    redis:
+      use-redis-cache: false
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+api:
+  prefix: /api/v1
+
+domain:
+  protocol: http://localhost:${server.port}
+
+jwt:
+  expiration: 2592000 # 30 days = 30 * 24 * 60 * 60
+  expiration-refresh-token: 5184000 # 60 days = 60 * 24 * 60 * 60
+  secretKey: "QpOD7PxEqUCWRB8BU6e+Hv29TQLUuG+0sxxSJZWAPGhrVVszWZU2hT5RhoQTvhgv"
+
+logging:
+  level:
+    org:
+      springframework.security: DEBUG
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tryItOutEnabled: true
+    filter: true
+  show-actuator: true
