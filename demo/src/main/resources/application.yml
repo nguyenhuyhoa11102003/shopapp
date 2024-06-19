@@ -40,9 +40,10 @@ logging:
     org:
       springframework.security: DEBUG
 
+# swagger-ui custom path
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
-    tryItOutEnabled: true
-    filter: true
+  api-docs:
+    path: /api-docs
   show-actuator: true

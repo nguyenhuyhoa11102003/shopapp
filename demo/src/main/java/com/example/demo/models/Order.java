@@ -1,5 +1,6 @@
 package com.example.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
@@ -68,5 +69,16 @@ public class Order {
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private List<OrderDetail> orderDetails;
+
+
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+
+
+	@ManyToOne
+	@JoinColumn(name = "coupon_id", nullable = true)
+	@JsonBackReference
+	private Coupon coupon = null;
 
 }

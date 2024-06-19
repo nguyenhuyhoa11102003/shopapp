@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,6 +33,9 @@ public class User extends BaseEntity implements UserDetails {
 
 	@Column(name = "email", length = 255, nullable = true)
 	private String email;
+
+	@Column(name = "address", length = 200)
+	private String address;
 
 	@Column(name = "profile_image", length = 255)
 	private String profileImage;
@@ -92,4 +96,8 @@ public class User extends BaseEntity implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
+
+	@JsonManagedReference
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Comment> comments = new ArrayList<>();
 }

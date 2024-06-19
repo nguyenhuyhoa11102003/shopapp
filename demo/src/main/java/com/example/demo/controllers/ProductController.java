@@ -59,7 +59,6 @@ public class ProductController {
 							.build()
 			);
 		}
-		;
 		Product newProduct = productService.createProduct(productDTO);
 		return ResponseEntity.ok(ResponseObject.builder()
 				.message("Create new product successfully")
