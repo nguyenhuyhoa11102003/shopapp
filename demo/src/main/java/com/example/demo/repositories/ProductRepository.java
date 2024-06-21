@@ -26,6 +26,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	@Query("SELECT p FROM Product p WHERE p.id IN :productIds")
 	List<Product> findProductsByIds(@Param("productIds") List<Long> productIds);
 
-	@Query("SELECT p FROM Product p WHERE (:categoryId IS NULL OR p.category.id = :categoryId) AND (:keyword IS NULL OR p.name LIKE %:keyword% OR p.description LIKE %:keyword%)")
+	@Query("SELECT p FROM Product p " +
+			"WHERE (:categoryId IS NULL OR p.category.id = :categoryId)" +
+			"AND (:keyword IS NULL OR p.name LIKE %:keyword% OR p.description LIKE %:keyword%)")
 	Page<Product> searchProducts(@Param("categoryId") Long categoryId, @Param("keyword") String keyword, Pageable pageable);
 }

@@ -18,7 +18,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class ProductDTO {
-
 	@NotBlank(message = "Title is required")
 	@Size(min = 3, max = 200, message = "Name must be between 3 and 200 characters")
 	private String name;
@@ -31,6 +30,4 @@ public class ProductDTO {
 	private String description;
 	@JsonProperty("category_id")
 	private Long categoryId;
-
-
 }

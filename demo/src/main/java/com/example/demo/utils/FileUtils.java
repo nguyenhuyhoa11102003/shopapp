@@ -44,4 +44,19 @@ public class FileUtils {
 		Files.copy(file.getInputStream(), destination, StandardCopyOption.REPLACE_EXISTING);
 		return uniqueFilename;
 	}
+
+	public static void deleteFile(String filename) throws IOException {
+        // Đường dẫn đến thư mục chứa file
+        java.nio.file.Path uploadDir = Paths.get(UPLOADS_FOLDER);
+        // Đường dẫn đầy đủ đến file cần xóa
+        java.nio.file.Path filePath = uploadDir.resolve(filename);
+
+        // Kiểm tra xem file tồn tại hay không
+        if (Files.exists(filePath)) {
+            // Xóa file
+            Files.delete(filePath);
+        } else {
+            //throw new FileNotFoundException("File not found: " + filename);
+        }
+    }
 }

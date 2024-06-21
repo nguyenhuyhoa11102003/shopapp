@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,8 +23,9 @@ import java.util.Arrays;
 import java.util.List;
 
 
-@Component
+//@Component
 @RequiredArgsConstructor
+@Slf4j
 public class JwtTokenFilter extends OncePerRequestFilter {
 	@Value("${api.prefix}")
 	private String apiPrefix;
@@ -50,6 +52,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 			if (phoneNumber != null
 					&& SecurityContextHolder.getContext().getAuthentication() == null) {
 				User userDetails = (User) userDetailsService.loadUserByUsername(phoneNumber);
+				boolean flag = jwtTokenUtil.validateToken(token, userDetails);
+				log.error("flag: " + flag);
 				if (jwtTokenUtil.validateToken(token, userDetails)) {
 					UsernamePasswordAuthenticationToken authenticationToken =
 							new UsernamePasswordAuthenticationToken(
@@ -77,6 +81,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 				Pair.of(String.format("%s/users/login", apiPrefix), "POST"),
 				Pair.of(String.format("%s/users/profile-images/**", apiPrefix), "GET"),
 				Pair.of(String.format("%s/users/refreshToken", apiPrefix), "POST"),
+
+				Pair.of(String.format("%s/policies/**", apiPrefix), "GET"),
+
+
+
 
 				// Swagger
 				Pair.of("/api-docs", "GET"),

@@ -7,11 +7,9 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -20,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User extends BaseEntity implements UserDetails {
+public class User extends BaseEntity implements UserDetails  , OAuth2User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -58,7 +56,6 @@ public class User extends BaseEntity implements UserDetails {
 	@ManyToOne
 	@JoinColumn(name = "role_id")
 	private Role role;
-
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -100,4 +97,15 @@ public class User extends BaseEntity implements UserDetails {
 	@JsonManagedReference
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Comment> comments = new ArrayList<>();
+
+	@Override
+	public String getName() {
+		 return getAttribute("name");
+	}
+
+	@Override
+	public Map<String, Object> getAttributes() {
+		return new HashMap<String, Object>();
+	}
+
 }

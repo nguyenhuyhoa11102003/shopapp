@@ -104,14 +104,13 @@ public class JwtTokenUtils {
 			String subject = extractClaim(token, Claims::getSubject);
 			//subject is phoneNumber or email
 			Token existingToken = tokenRepository.findByToken(token);
-			if (existingToken == null ||
-					existingToken.isRevoked() == true ||
-					!userDetails.isActive()
-			) {
+			if (existingToken == null || existingToken.isRevoked() ||!userDetails.isActive()) {
 				return false;
 			}
-			return (subject.equals(userDetails.getUsername()))
-					&& !isTokenExpired(token);
+//			log.error(subject.equals(userDetails.getUsername())  +  " " + !isTokenExpired(token));
+//			return (subject.equals(userDetails.getUsername()))
+//					&& !isTokenExpired(token);
+			return  !isTokenExpired(token);
 		} catch (MalformedJwtException e) {
 			log.error("Invalid JWT token: {}", e.getMessage());
 		} catch (ExpiredJwtException e) {

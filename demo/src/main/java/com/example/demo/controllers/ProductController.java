@@ -44,6 +44,7 @@ public class ProductController {
 	private final LocalizationUtils localizationUtils;
 	private final IProductRedisService productRedisService;
 
+
 	@PostMapping("")
 	public ResponseEntity<ResponseObject> createProduct(@Valid @RequestBody ProductDTO productDTO, BindingResult result) throws Exception {
 		log.info("Creating product: {}", productDTO);
@@ -68,7 +69,7 @@ public class ProductController {
 	}
 
 
-	@PostMapping(value = "uploads/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/uploads/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<ResponseObject> uploadImages(@PathVariable("id") Long productId, @ModelAttribute("files") List<MultipartFile> files) throws Exception {
 		Product existingProduct = productService.getProductById(productId);
 		files = files == null ? new ArrayList<MultipartFile>() : files;
@@ -149,7 +150,7 @@ public class ProductController {
 	@GetMapping("")
 	public ResponseEntity<ResponseObject> getProducts(
 			@RequestParam(defaultValue = "") String keyword,
-			@RequestParam(defaultValue = "0", name = "category_id") Long categoryId,
+			@RequestParam(defaultValue = "1", name = "category_id") Long categoryId,
 			@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int limit
 	) throws JsonProcessingException {

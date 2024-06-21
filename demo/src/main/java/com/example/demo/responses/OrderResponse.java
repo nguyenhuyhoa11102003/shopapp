@@ -3,6 +3,7 @@ package com.example.demo.responses;
 import com.example.demo.models.Order;
 import com.example.demo.models.OrderDetail;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -63,9 +64,9 @@ public class OrderResponse {
 
 	public static OrderResponse fromOrder(Order order) {
 		List<OrderDetail> orderDetails = order.getOrderDetails();
-		 List<OrderDetailResponse> orderDetailResponses = orderDetails
-                .stream()
-                .map(OrderDetailResponse::fromOrderDetail).toList();
+		List<OrderDetailResponse> orderDetailResponses = orderDetails
+				.stream()
+				.map(OrderDetailResponse::fromOrderDetail).toList();
 
 		return OrderResponse.builder()
 				.id(order.getId())

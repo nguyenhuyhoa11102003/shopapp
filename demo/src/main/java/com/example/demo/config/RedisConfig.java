@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
@@ -23,18 +24,19 @@ public class RedisConfig {
 
 	private static final Logger logger = LoggerFactory.getLogger(RedisConfig.class);
 
-	@Value("${spring.data.redis.host}") // Read 'spring.data.redis.host' property from application.yml
-	private String redisHost;
+//	@Value("${spring.data.redis.host}") // Read 'spring.data.redis.host' property from application.yml
+	private String redisHost  ="localhost";
 
-	@Value("${spring.data.redis.port}") // Read 'spring.data.redis.port' property from application.yml
-	private int redisPort;
+//	@Value("${spring.data.redis.port}") // Read 'spring.data.redis.port' property from application.yml
+	private int redisPort  = 6379;
 
 
 	@Bean
 	public LettuceConnectionFactory redisConnectionFactory() {
 		logger.info(String.format("redisHost = %s, redisPort = %d", redisHost, redisPort));
-		RedisStandaloneConfiguration configuration =
-				new RedisStandaloneConfiguration(redisHost, redisPort);
+		RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
+		configuration.setHostName(redisHost);
+		configuration.setPort(redisPort);
 		return new LettuceConnectionFactory(configuration);
 	}
 

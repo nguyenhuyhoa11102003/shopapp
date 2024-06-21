@@ -42,6 +42,7 @@ public class ProductService implements IProductService {
 				.name(productDTO.getName())
 				.thumbnail(productDTO.getThumbnail())
 				.description(productDTO.getDescription())
+				.price(productDTO.getPrice())
 				.category(category)
 				.build();
 
@@ -121,7 +122,7 @@ public class ProductService implements IProductService {
 				.build();
 
 		int size = productImageRepository.findByProductId(productId).size();
-		if (size < ProductImage.MAXIMUM_IMAGES_PER_PRODUCT) {
+		if (size > ProductImage.MAXIMUM_IMAGES_PER_PRODUCT) {
 			throw new InvalidParamException(
 					"Number of images must be <= "
 							+ ProductImage.MAXIMUM_IMAGES_PER_PRODUCT);

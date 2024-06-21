@@ -37,7 +37,6 @@ public class OrderService implements IOrderService {
 				.findById(orderDTO.getUserId())
 				.orElseThrow(() -> new DataNotFoundException("Cannot find user with id: " + orderDTO.getUserId()));
 
-
 		modelMapper.typeMap(OrderDTO.class, Order.class)
 				.addMappings(mapper -> mapper.skip(Order::setId));
 
@@ -75,6 +74,7 @@ public class OrderService implements IOrderService {
 			orderDetail.setProduct(product);
 			orderDetail.setNumberOfProducts(quantity);
 			orderDetail.setPrice(product.getPrice());
+			orderDetail.setTotalMoney(product.getPrice() * quantity);
 			orderDetails.add(orderDetail);
 		}
 		//coupon
@@ -91,9 +91,9 @@ public class OrderService implements IOrderService {
 		} else {
 			order.setCoupon(null);
 		}
-		this.orderDetailRepository.saveAll(orderDetails);
+		order.setOrderDetails(orderDetails);
 		this.orderRepository.save(order);
-		return null;
+		return order;
 	}
 
 	@Override
