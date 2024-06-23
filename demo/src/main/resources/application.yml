@@ -20,9 +20,20 @@ spring:
         format_sql: true
   data:
     redis:
-      use-redis-cache : true
+      use-redis-cache: true
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 286243808203-7h0kh2gtohqrkdv5m7teumkhqocbhqq7.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - openid
+              - email
+              - profile
 
 api:
   prefix: /api/v1

@@ -18,9 +18,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Objects;
 
-@Service
 @Slf4j
 @RequiredArgsConstructor
+@RestController
+@RequestMapping("${api.prefix}/comments")
 public class CommentController {
 
 	private final CommentService commentService;
@@ -32,7 +33,7 @@ public class CommentController {
 	) {
 		// Insert the new comment
 		User loginUser = securityUtils.getLoggedInUser();
-		if (loginUser.getId() != commentDTO.getUserId()) {
+		if (!Objects.equals(loginUser.getId(), commentDTO.getUserId())) {
 			return ResponseEntity.badRequest().body(
 					new ResponseObject(
 							"You cannot comment as another user",

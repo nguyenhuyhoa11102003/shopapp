@@ -28,4 +28,6 @@ public interface IUserService {
 	void blockOrEnable(Long userId, Boolean active) throws DataNotFoundException;
     void changeProfileImage(Long userId, String imageName) throws Exception;
 
+
+	void processOAuthPostLogin(String username) throws DataNotFoundException;
 }

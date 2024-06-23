@@ -221,4 +221,31 @@ public class UserService implements IUserService {
 		existingUser.setProfileImage(imageName);
 		userRepository.save(existingUser);
 	}
+
+	@Override
+	public void processOAuthPostLogin(String username) throws DataNotFoundException {
+		UserDTO userDTO = UserDTO
+				.builder()
+				.roleId(1L)
+				.build();
+
+		Role role = this.roleRepository.findById(userDTO.getRoleId())
+				.orElseThrow(() -> new DataNotFoundException(
+						localizationUtils.getLocalizedMessage(MessageKeys.ROLE_DOES_NOT_EXISTS)));
+
+		Optional<User> user = userRepository.findByEmail(username);
+
+		if (user.isEmpty()) {
+			User newUser = User
+					.builder()
+					.email(username)
+					.googleAccountId(1)
+					.active(true)
+					.role(role)
+					.build();
+			this.userRepository.save(newUser);
+		}
+
+
+	}
 }

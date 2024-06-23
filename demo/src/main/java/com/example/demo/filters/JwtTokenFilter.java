@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-//@Component
+@Component
 @RequiredArgsConstructor
 @Slf4j
 public class JwtTokenFilter extends OncePerRequestFilter {
@@ -53,7 +53,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 					&& SecurityContextHolder.getContext().getAuthentication() == null) {
 				User userDetails = (User) userDetailsService.loadUserByUsername(phoneNumber);
 				boolean flag = jwtTokenUtil.validateToken(token, userDetails);
-				log.error("flag: " + flag);
 				if (jwtTokenUtil.validateToken(token, userDetails)) {
 					UsernamePasswordAuthenticationToken authenticationToken =
 							new UsernamePasswordAuthenticationToken(
@@ -81,12 +80,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 				Pair.of(String.format("%s/users/login", apiPrefix), "POST"),
 				Pair.of(String.format("%s/users/profile-images/**", apiPrefix), "GET"),
 				Pair.of(String.format("%s/users/refreshToken", apiPrefix), "POST"),
-
 				Pair.of(String.format("%s/policies/**", apiPrefix), "GET"),
 
 
-
-
+				Pair.of("/home", "GET"),
+				Pair.of("/login", "GET"),
 				// Swagger
 				Pair.of("/api-docs", "GET"),
 				Pair.of("/api-docs/**", "GET"),
