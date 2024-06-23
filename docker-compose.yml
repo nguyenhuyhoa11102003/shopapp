@@ -13,20 +13,20 @@ services:
       - '3306:3306'
     volumes:
       - demo_db:/var/lib/mysql
-  app:
-    image: spring-boot-render:latest
-    depends_on:
-      - db
-    build: ./
-    restart: on-failure
-    ports:
-      - "8080:8080"
-    environment:
-      MYSQL_HOST: db
-      MYSQL_PORT: 3306
-      MYSQL_DB_NAME: shopapp
-      MYSQL_ROOT_USERNAME: root
-      MYSQL_ROOT_PASSWORD: root
+#  app:
+#    image: spring-boot-render:latest
+#    depends_on:
+#      - db
+#    build: ./
+#    restart: on-failure
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      MYSQL_HOST: db
+#      MYSQL_PORT: 3306
+#      MYSQL_DB_NAME: shopapp
+#      MYSQL_ROOT_USERNAME: root
+#      MYSQL_ROOT_PASSWORD: root
   cache:
     image: redis:6.2-alpine
     restart: always
