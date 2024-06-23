@@ -7,7 +7,7 @@ LABEL authors="demo"
 # Set working directory trong container
 WORKDIR /app
 # Copy file JAR được build từ ứng dụng Spring Boot vào working directory trong container
-COPY /target/*.jar demo.jar
+COPY ./target/demo-0.0.1-SNAPSHOT.jar demo.jar
 
 # Chỉ định command để chạy ứng dụng khi container khởi chạy
 ENTRYPOINT ["java","-jar","demo.jar"]
