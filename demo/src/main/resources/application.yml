@@ -28,8 +28,8 @@ spring:
       client:
         registration:
           google:
-            client-id: 286243808203-7h0kh2gtohqrkdv5m7teumkhqocbhqq7.apps.googleusercontent.com
-            client-secret: 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
+#            client-id: 286243808203-7h0kh2gtohqrkdv5m7teumkhqocbhqq7.apps.googleusercontent.com
+#            client-secret: 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
             scope:
               - openid
               - email
