@@ -4,10 +4,9 @@ server:
 spring:
   application:
     name: app
-
   datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DB_NAME:shopapp}?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&serverTimezone=UTC&createDatabaseIfNotExist=true
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/shopapp?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&serverTimezone=UTC&createDatabaseIfNotExist=true}
     username: ${MYSQL_ROOT_USERNAME:root}
     password: ${MYSQL_ROOT_PASSWORD:root}
 

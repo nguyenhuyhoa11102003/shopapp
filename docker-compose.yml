@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   db:
+    container_name: db
     image: mysql:latest
     cap_add:
       - SYS_NICE
@@ -11,7 +12,21 @@ services:
     ports:
       - '3306:3306'
     volumes:
-      - db:/var/lib/mysql
+      - demo_db:/var/lib/mysql
+  app:
+    image: spring-boot-render:latest
+    depends_on:
+      - db
+    build: ./
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    environment:
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+      MYSQL_DB_NAME: shopapp
+      MYSQL_ROOT_USERNAME: root
+      MYSQL_ROOT_PASSWORD: root
   cache:
     image: redis:6.2-alpine
     restart: always
@@ -20,7 +35,7 @@ services:
     volumes:
       - cache:/data
 volumes:
-  db:
-    driver: local
+  demo_db:
+    external: true
   cache:
     driver: local
